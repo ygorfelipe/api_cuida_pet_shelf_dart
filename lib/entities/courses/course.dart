@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-class CoursesModel {
+class Course {
   final int? id;
   final String title;
   final String description;
@@ -12,7 +12,7 @@ class CoursesModel {
   final String image;
   final DateTime createdAt;
   final DateTime updateAt;
-  CoursesModel({
+  Course({
     this.id,
     required this.title,
     required this.description,
@@ -25,7 +25,7 @@ class CoursesModel {
     required this.updateAt,
   });
 
-  CoursesModel copyWith({
+  Course copyWith({
     int? id,
     String? title,
     String? description,
@@ -37,7 +37,7 @@ class CoursesModel {
     DateTime? createdAt,
     DateTime? updateAt,
   }) {
-    return CoursesModel(
+    return Course(
       id: id ?? this.id,
       title: title ?? this.title,
       description: description ?? this.description,
@@ -81,8 +81,8 @@ class CoursesModel {
     };
   }
 
-  factory CoursesModel.fromMap(Map<String, dynamic> map) {
-    return CoursesModel(
+  factory Course.fromMap(Map<String, dynamic> map) {
+    return Course(
       id: (map['id'] == null ? null : int.parse(map['id'].toString())),
       title: map['title'] as String,
       description: map['description'] as String,
@@ -102,16 +102,16 @@ class CoursesModel {
 
   String toJson() => json.encode(toMap());
 
-  factory CoursesModel.fromJson(String source) =>
-      CoursesModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Course.fromJson(String source) =>
+      Course.fromMap(json.decode(source) as Map<String, dynamic>);
 
-  CoursesModel updateMap(Map<String, dynamic> data) {
-    return CoursesModel(
+  Course updateMap(Map<String, dynamic> data) {
+    return Course(
       id: id,
       title: data['title'] ?? title,
       description: data['description'] ?? description,
       target: data['target'] ?? target,
-      totalHours: data['totalHours'] ?? totalHours,
+      totalHours: data['total_hours'] ?? totalHours,
       enabled: data['enabled'] ?? enabled,
       link: data['link'] ?? link,
       image: data['image'] ?? image,

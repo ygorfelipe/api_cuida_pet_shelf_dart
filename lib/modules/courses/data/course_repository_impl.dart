@@ -1,5 +1,5 @@
 import 'package:api_cuidapet/application/database/database.dart';
-import 'package:api_cuidapet/model/courses/courses_model.dart';
+import 'package:api_cuidapet/entities/courses/course.dart';
 
 import './course_repository.dart';
 
@@ -9,10 +9,10 @@ class CourseRepositoryImpl implements CourseRepository {
   CourseRepositoryImpl({required Database database}) : _database = database;
 
   @override
-  Future<List<CoursesModel>?> getAll() async {
+  Future<List<Course>?> getAll() async {
     final data = await _database.getData('SELECT * FROM COURSES');
     if (data != null) {
-      return data.map<CoursesModel>((c) => CoursesModel.fromMap(c)).toList();
+      return data.map<Course>((c) => Course.fromMap(c)).toList();
     }
     return null;
   }
@@ -24,19 +24,19 @@ class CourseRepositoryImpl implements CourseRepository {
   }
 
   @override
-  Future<CoursesModel?> getById(int id) {
+  Future<Course?> getById(int id) {
     // TODO: implement getById
     throw UnimplementedError();
   }
 
   @override
-  Future<int?> save(CoursesModel model) {
+  Future<int?> save(Course model) {
     // TODO: implement save
     throw UnimplementedError();
   }
 
   @override
-  Future<bool> update(int id, CoursesModel model) {
+  Future<bool> update(int id, Course model) {
     // TODO: implement update
     throw UnimplementedError();
   }

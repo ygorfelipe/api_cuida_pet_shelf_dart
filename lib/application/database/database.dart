@@ -1,5 +1,5 @@
 abstract interface class Database {
-Future<T?> openDatabase<T>();
+  Future<T?> openDatabase<T>(Map<String, dynamic> path);
   Future<void> closeDatabase();
   Future<List<T>?> getData<T>(String query);
   Future<T?> getUnique<T>(String query);
@@ -11,5 +11,4 @@ Future<T?> openDatabase<T>();
   Future<void> clear<T>(String s);
   Future<T?> objectExists<T>({required T object, required String tableName});
   Future<int?> objectIndex<T>({required T object, required String tableName});
-
 }

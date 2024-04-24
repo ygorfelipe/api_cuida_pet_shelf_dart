@@ -11,9 +11,8 @@ import 'package:api_cuidapet/application/middlewares/security/security_skip_url.
 
 class SecurityMiddleware extends Middlewares {
   final Logger log;
-  final skypeUrl = <SecuritySkipUrl>[
-    SecuritySkipUrl(url: '/auth', method: 'POST'),
-    SecuritySkipUrl(url: '/courses', method: 'GET')
+  final skipUrl = <SecuritySkipUrl>[
+    SecuritySkipUrl(url: '/auth/register', method: 'POST'),
   ];
 
   SecurityMiddleware(this.log);
@@ -21,7 +20,7 @@ class SecurityMiddleware extends Middlewares {
   @override
   Future<Response> execute(Request request) async {
     try {
-      if (skypeUrl.contains(SecuritySkipUrl(
+      if (skipUrl.contains(SecuritySkipUrl(
           url: '/${request.url.path}', method: request.method))) {
         return innerHandler(request);
       }
@@ -33,6 +32,7 @@ class SecurityMiddleware extends Middlewares {
       }
 
       final authHeaderContent = authHeader.split(' ');
+
       if (authHeaderContent[0] != 'Bearer') {
         throw JwtException.invalidToken;
       }
@@ -40,14 +40,13 @@ class SecurityMiddleware extends Middlewares {
       final authorizationToken = authHeaderContent[1];
       final claims = JwtHelper.getClaims(authorizationToken);
 
-      //! refresh token
       if (request.url.path != 'auth/refresh') {
         claims.validate();
       }
 
       final claimsMap = claims.toJson();
+
       final userId = claimsMap['sub'];
-      final admId = claimsMap['adm'];
 
       if (userId == null) {
         throw JwtException.invalidToken;
@@ -56,7 +55,6 @@ class SecurityMiddleware extends Middlewares {
       final securityHeaders = {
         'user': userId,
         'access_token': authorizationToken,
-        'adm': admId
       };
 
       return innerHandler(request.change(headers: securityHeaders));
@@ -64,7 +62,7 @@ class SecurityMiddleware extends Middlewares {
       log.error('Erro ao validar token JWT', e, s);
       return Response.forbidden(jsonEncode({}));
     } catch (e, s) {
-      log.error('Internal server Error', e, s);
+      log.error('Internal Server Error', e, s);
       return Response.forbidden(jsonEncode({}));
     }
   }

@@ -5,7 +5,7 @@ import 'package:dotenv/dotenv.dart';
 class Env {
   static Env? _instance;
   Logger? _logger;
-  DotEnv env = DotEnv(includePlatformEnvironment: true)..load();
+  DotEnv? env;
 
   Env._();
 
@@ -19,5 +19,5 @@ class Env {
     _logger?.infoServer(this);
   }
 
-  String? operator [](String key) => env[key] ?? '';
+  String? operator [](String key) => env?[key] ?? '';
 }

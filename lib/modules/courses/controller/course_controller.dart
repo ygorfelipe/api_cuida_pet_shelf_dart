@@ -20,4 +20,9 @@ class CourseController {
     }
     return Response.notFound(jsonEncode({'message': 'Cursos não encontrado'}));
   }
+  // Future<Response> getAll(Request request) async {
+  //   return Response.ok(
+  //     jsonEncode({'message': 'Teste first page'}),
+  //   );
+  // }
 }
