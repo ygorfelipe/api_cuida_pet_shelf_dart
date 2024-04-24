@@ -1,4 +1,4 @@
-import 'package:api_cuidapet/model/courses/courses_model.dart';
+import 'package:api_cuidapet/entities/courses/course.dart';
 import 'package:api_cuidapet/modules/courses/data/course_repository.dart';
 
 import './course_service.dart';
@@ -10,28 +10,28 @@ class CourseServiceImpl implements CourseService {
       : _repository = repository;
 
   @override
-  Future<List<CoursesModel>?> getAll() => _repository.getAll();
+  Future<List<Course>?> getAll() => _repository.getAll();
 
   @override
-  Future<CoursesModel?> delete(int id) {
+  Future<Course?> delete(int id) {
     // TODO: implement delete
     throw UnimplementedError();
   }
 
   @override
-  Future<CoursesModel?> getById(int id) {
+  Future<Course?> getById(int id) {
     // TODO: implement getById
     throw UnimplementedError();
   }
 
   @override
-  Future<CoursesModel?> save(CoursesModel model) {
+  Future<Course?> save(Course model) {
     // TODO: implement save
     throw UnimplementedError();
   }
 
   @override
-  Future<CoursesModel?> update(int id, {required Map<String, dynamic> data}) {
+  Future<Course?> update(int id, {required Map<String, dynamic> data}) {
     // TODO: implement update
     throw UnimplementedError();
   }

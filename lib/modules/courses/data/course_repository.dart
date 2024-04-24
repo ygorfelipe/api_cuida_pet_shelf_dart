@@ -1,9 +1,9 @@
-import 'package:api_cuidapet/model/courses/courses_model.dart';
+import 'package:api_cuidapet/entities/courses/course.dart';
 
 abstract interface class CourseRepository {
-  Future<List<CoursesModel>?> getAll();
-  Future<CoursesModel?> getById(int id);
-  Future<int?> save(CoursesModel model);
+  Future<List<Course>?> getAll();
+  Future<Course?> getById(int id);
+  Future<int?> save(Course model);
   Future<bool> delete(int id);
-  Future<bool> update(int id, CoursesModel model);
+  Future<bool> update(int id, Course model);
 }

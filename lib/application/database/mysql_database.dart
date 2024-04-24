@@ -1,13 +1,11 @@
-import 'package:api_cuidapet/application/database/database.dart';
-import 'package:api_cuidapet/application/logger/logger.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:api_cuidapet/application/developer/developer.dart';
 import 'package:mysql_client/mysql_client.dart';
 
-import '../config/database_connection_config.dart';
+import 'package:api_cuidapet/application/database/database.dart';
 
 class MysqlDatabase implements Database {
   MySQLConnection? conn;
-  Logger? _logger;
-  DatabaseConnectionConfig? _databaseConnectionConfig;
 
   MysqlDatabase._();
 
@@ -107,30 +105,32 @@ class MysqlDatabase implements Database {
       }
       return 0;
     } catch (e, s) {
-      _logger?.error('Erro ao savar', e, s);
+      Developer.logError(
+        errorText: 'Fail to save',
+        error: e,
+        stackTrace: s,
+        errorName: runtimeType.toString(),
+      );
       return 0;
     }
   }
 
   @override
-  Future<MysqlDatabase?> openDatabase<MysqlDatabase>() async {
+  Future<MysqlDatabase?> openDatabase<MysqlDatabase>(
+      Map<String, dynamic> path) async {
     conn = await MySQLConnection.createConnection(
-      host: _databaseConnectionConfig!.host,
-      port: int.parse(_databaseConnectionConfig!.port.toString()),
-      userName: _databaseConnectionConfig!.user,
-      password: _databaseConnectionConfig!.password,
-      databaseName: _databaseConnectionConfig!.databaseName,
-      secure: int.parse(_databaseConnectionConfig!.secure.toString()) == 0
-          ? false
-          : true,
+      host: path['host'],
+      port: int.parse(path['port']),
+      userName: path['userName'],
+      password: path['password'],
+      databaseName: path['databaseName'],
+      secure: int.parse(path['secure']) == 0 ? false : true,
     );
     conn?.connect();
-    _logger?.infoServer(this);
+    Developer.logInstance(this);
 
     return this as MysqlDatabase;
   }
-
-
 
   @override
   Future<bool> update<T>({required String tableName, required T value}) async {
@@ -156,7 +156,11 @@ class MysqlDatabase implements Database {
       }
       return false;
     } catch (e, s) {
-      _logger?.error('Erro ao savar', e, s);
+      Developer.logError(
+          errorText: 'Fail to save',
+          error: e,
+          stackTrace: s,
+          errorName: runtimeType.toString());
       return false;
     }
   }
